@@ -7,7 +7,7 @@ It's primary features are:
 - Querying Wolfram|Alpha
 - A Turing complete calculator
 
-The bot is currently developed for python `3.6.4`.
+The bot is currently developed for python `3.9.4`.
 
 ## Links
 
@@ -22,7 +22,7 @@ The bot is currently developed for python `3.6.4`.
 git clone https://github.com/DXsmiley/mathbot.git
 cd mathbot
 cp mathbot/parameters_default.json mathbot/parameters.json
-pipenv --python 3.6
+pipenv --python 3.9
 pipenv install --skip-lock
 ```
 
@@ -38,7 +38,7 @@ Then navigate into the `mathbot` directory and run the bot with `python entrypoi
 git clone https://github.com/DXsmiley/mathbot.git
 cd mathbot
 cp mathbot/parameters_default.json mathbot/parameters.json
-pipenv --python 3.6
+pipenv --python 3.9
 pipenv install --dev --skip-lock
 ```
 
@@ -105,17 +105,3 @@ There are some additional tests that require a human to verify the bot's output.
 - *shards*
 	- *total*: The total number of shards that the bot is running on.
 	- *mine*: A list of integers (starting at `0`) specifying which shards should be run in this process.
-
-## Additional Installation Issues (Ubuntu only)
-
-If you don't have python 3.6
-```
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt update
-sudo apt install python3.6
-```
-
-If you have installation troubles with cffi or psutil
-```
-sudo apt-get install python3.6-dev
-```

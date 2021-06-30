@@ -19,8 +19,8 @@ apt-get update
 
 apt-add-repository ppa:deadsnakes/ppa
 apt-get update
-apt-get install python3.6 -y
-apt-get install python3.6-dev -y
+apt-get install python3.9 -y
+apt-get install python3.9-dev -y
 
 apt-get install python3-pip -y
 pip3 --version
