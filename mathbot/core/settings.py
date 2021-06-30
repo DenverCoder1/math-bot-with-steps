@@ -11,6 +11,7 @@ SETTINGS = {
 	'c-tex': {'default': True},
 	'c-calc': {'default': True},
 	'c-wolf': {'default': True},
+	'c-steps': {'default': True},
 	'c-roll': {'default': True},
 	'c-oeis': {'default': True},
 	'f-calc-shortcut': {'default': True},

@@ -274,7 +274,7 @@ class WolframModule(Cog):
 						print('    -', i)
 					async with Locker(ctx) as ok:
 						if ok:
-							await self.answer_query(ctx, data['query'], small=False, assumptions=assumptions_to_use)
+							await self.answer_query(ctx, data['query'], small=False, show_steps=False, assumptions=assumptions_to_use)
 							data['used'] = True
 
 	async def delete_results(self, reaction, user):

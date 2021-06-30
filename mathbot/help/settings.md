@@ -33,6 +33,7 @@ These settings can be applied to the `server` and `channel` contexts, but only b
 - `c-calc` : Toggles the `{{prefix}}calc` command. Default: *Enabled*
 - `c-tex` : Toggles the `{{prefix}}tex` command. Default: *Enabled*
 - `c-wolf` : Toggles the `{{prefix}}wolf` command. Default: *Enabled*
+- `c-steps` : Toggles the `{{prefix}}steps` command. Default: *Enabled*
 - `c-roll` : Toggles the `{{prefix}}roll` command. Default: *Enabled*
 - `c-oeis` : Toggles the `{{prefix}}oeis` command. Default: *Enabled*
 - `f-calc-shortcut` : Toggles the `==` shortcut for the `{{prefix}}calc` command. Disabling this **will not** produce an error message if a user attempts to use this command. This is intended to be used *only* if this command conflicts with other bots on your server. Default: *Enabled*
@@ -51,6 +52,9 @@ These settings can be applied to the `server` and `channel` contexts, but only b
 
 Disable the `=wolf` command on a server:
 `{{prefix}}set server c-wolf disable`
+
+Disable the `=wolf` command on a server:
+`{{prefix}}set server c-steps disable`
 
 Enable the `=calc` command on a single channel:
 `{{prefix}}set channel c-calc enable`
