@@ -222,7 +222,7 @@ class WolframModule(Cog):
 	@core.settings.command_allowed('c-steps')
 	@check(require_api)
 	async def steps(self, ctx, *, query=''):
-		await self.command_impl(ctx, query, False, False, 'steps')
+		await self.command_impl(ctx, query, False, True, 'steps')
 
 	@command()
 	@core.settings.command_allowed('c-wolf')
