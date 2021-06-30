@@ -28,16 +28,18 @@ UNINTERESTING_PODSTATES = [
 ]
 
 WOLF_PODSTATES = [
-	'Step-by-step solution',
-	'Step-by-step',
-	'Show all steps',
-	'Result__Step-by-step solution',
 	'Result__Show limits',
 	'DecimalApproximation__More digits'
 ]
 
+STEP_BY_STEP_PODSTATES = [
+	'Step-by-step solution',
+	'Step-by-step',
+	'Show all steps',
+	'Result__Step-by-step solution',
+]
 
-ALL_PODSTATES = UNINTERESTING_PODSTATES + WOLF_PODSTATES
+ALL_PODSTATES = UNINTERESTING_PODSTATES + WOLF_PODSTATES + STEP_BY_STEP_PODSTATES
 
 
 class WolframError(Exception):
@@ -114,15 +116,16 @@ class Client:
 		else:
 			return await self._request(query, assumptions, session=session, **kwargs)	
 
-	async def _request(self, query: str, assumptions: typing.List[str] = [], *, session: aiohttp.ClientSession, imperial: bool=False, debug: bool=False, download_images: bool=True, timeout: int=30, extra_pod_information: bool=False) -> Result:
+	async def _request(self, query: str, assumptions: typing.List[str] = [], *, session: aiohttp.ClientSession, imperial: bool=False, debug: bool=False, download_images: bool=True, timeout: int=30, extra_pod_information: bool=False, show_steps: bool=False) -> Result:
 		payload = [
 			('appid', self._appid),
 			('input', query),
 			('units', 'nonmetric' if imperial else 'metric'),
 			('scantimeout', 25)
 		]
+		podstates = WOLF_PODSTATES if not show_steps else STEP_BY_STEP_PODSTATES
 		if extra_pod_information:
-			for i in WOLF_PODSTATES:
+			for i in podstates:
 				payload.append(('podstate', i))
 		for i in assumptions:
 			payload.append(('assumption', i))
