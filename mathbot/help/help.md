@@ -9,7 +9,8 @@ MathBot is developed by DXsmiley. You can talk to him via the official MathBot s
 The following user commands are available:
 
 	`{{prefix}}tex` - Renders *LaTeX* equations. See `{{prefix}}help latex` for details.
-	`{{prefix}}wolf` - Query wolfram alpha. Can be slow. See `{{prefix}}help wolf` for details.
+	`{{prefix}}wolf` - Query Wolfram|Alpha. Can be slow. See `{{prefix}}help wolf` for details.
+	`{{prefix}}steps` - Query Wolfram|Alpha with step-by-step included. See `{{prefix}}help wolf` for details.
 	`{{prefix}}calc` - Does calculations. See `{{prefix}}help calc` for full list of features.
 	`{{prefix}}roll` - Rolls dice. See `{{prefix}}help roll` for details.
 	`{{prefix}}oeis` - Search the Online Encyclopedia of Integer Sequences.
