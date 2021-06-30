@@ -3,4 +3,4 @@ emerald:  cd mathbot && python entrypoint.py PARAMETERS.env '{"shards": {"mine":
 saphire:  cd mathbot && python entrypoint.py PARAMETERS.env '{"shards": {"mine": [10, 11]}}'
 topaz:    cd mathbot && python entrypoint.py PARAMETERS.env '{"shards": {"mine": [12, 13]}}'
 opal:     cd mathbot && python entrypoint.py PARAMETERS.env '{"shards": {"mine": [14]}}'
-simple:   cd mathbot && python entrypoint.py PARAMETERS.env
+worker:   cd mathbot && python entrypoint.py PARAMETERS.env
