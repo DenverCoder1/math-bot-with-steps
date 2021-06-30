@@ -216,21 +216,27 @@ class WolframModule(Cog):
 	@core.settings.command_allowed('c-wolf')
 	@check(require_api)
 	async def wolf(self, ctx, *, query=''):
-		await self.command_impl(ctx, query, False, 'wolf')
+		await self.command_impl(ctx, query, False, False, 'wolf')
+
+	@command()
+	@core.settings.command_allowed('c-steps')
+	@check(require_api)
+	async def steps(self, ctx, *, query=''):
+		await self.command_impl(ctx, query, False, False, 'steps')
 
 	@command()
 	@core.settings.command_allowed('c-wolf')
 	@check(require_api)
 	async def pup(self, ctx, *, query=''):
-		await self.command_impl(ctx, query, True, 'pup')
+		await self.command_impl(ctx, query, True, False, 'pup')
 
-	async def command_impl(self, ctx, query, small, name):
+	async def command_impl(self, ctx, query, small, show_steps, name):
 		if query in ['', 'help']:
 			await ctx.send(f'Usage: `{ctx.prefix}{name} plot x^2 - 3`. Run `{ctx.prefix}help {name}` for details.')
 		else:
 			async with Locker(ctx) as ok:
 				if ok:
-					await self.answer_query(ctx, query, small=small)
+					await self.answer_query(ctx, query, small=small, show_steps=show_steps)
 
 	@Cog.listener()
 	async def on_reaction_add(self, reaction, user):
@@ -284,7 +290,7 @@ class WolframModule(Cog):
 					get_and_delete(i) for i in data['image ids'] + [data['message id']]
 				])
 
-	async def answer_query(self, ctx, query, assumptions=[], small=False, debug=False):
+	async def answer_query(self, ctx, query, assumptions=[], small=False, show_steps=False, debug=False):
 		safe.sprint('wolfram|alpha :', ctx.author.name, ':', query)
 		channel = ctx.channel
 		author = ctx.author
@@ -307,7 +313,8 @@ class WolframModule(Cog):
 					assumptions,
 					imperial=(units == 'imperial'),
 					debug=debug,
-					extra_pod_information=not small
+					extra_pod_information=not small,
+					show_steps=show_steps
 				)
 		except (wolfapi.WolframError, wolfapi.WolframDidntSucceed):
 			await ctx.send(ERROR_MESSAGE_NO_RESULTS)
