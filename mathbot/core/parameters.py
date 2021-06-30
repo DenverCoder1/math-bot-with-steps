@@ -64,6 +64,8 @@ class Parameters:
 		peices = path.replace('.', ' ').split(' ')
 		result = self.dictionary
 		for i in peices:
+			if i not in result:
+				return None
 			result = result[i]
 		return result
 
