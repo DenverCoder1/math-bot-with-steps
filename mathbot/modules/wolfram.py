@@ -7,6 +7,7 @@
 	Commands:
 		=wolf <query>
 		=pup <query>
+		=steps <query>
 
 '''
 

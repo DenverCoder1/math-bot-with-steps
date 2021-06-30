@@ -16,3 +16,4 @@ List of commands:
 - `{{prefix}}tex` - Render LaTeX
 - `{{prefix}}theme` - Changes the colour of the output
 - `{{prefix}}wolf` - Query Wofram|Alpha
+- `{{prefix}}steps` - Query Wofram|Alpha with step-by-step solutions included
