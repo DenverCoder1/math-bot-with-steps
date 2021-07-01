@@ -1,17 +1,21 @@
-# MathBot
+# MathBotWithSteps
 
-MathBot is a discord bot that contains a number of features to help with mathematics.
+MathBotWithSteps is a fork of [MathBot](https://github.com/DXsmiley/mathbot) that adds an additional command, `=steps` that will query Wolfram|Alpha **with step-by-step solutions**.
+
+MathBot is a Discord bot that contains a number of features to help with mathematics.
 
 It's primary features are:
 - LaTeX rendering
 - Querying Wolfram|Alpha
 - A Turing complete calculator
 
-The bot is currently developed for python `3.9.6`.
-
 ## Links
 
-- [Add the bot to your own server](https://dxsmiley.github.io/mathbot/add.html)
+- [Add MathBotWithSteps to your own server](https://discord.com/api/oauth2/authorize?client_id=859799953513775104&permissions=117824&scope=bot)
+
+### MathBot Links
+
+- [Add MathBot to your own server](https://dxsmiley.github.io/mathbot/add.html)
 - [Support me on Patreon](https://www.patreon.com/dxsmiley)
 - [Project Trello Board](https://trello.com/b/j6b7vpGA/mathbot)
 - [Official Discord Server](https://discord.gg/JbJbRZS)
@@ -19,8 +23,8 @@ The bot is currently developed for python `3.9.6`.
 ## Setup for use
 
 ```bash
-git clone https://github.com/DXsmiley/mathbot.git
-cd mathbot
+git clone https://github.com/DenverCoderOne/math-bot-with-steps.git
+cd math-bot-with-steps
 cp mathbot/parameters_default.json mathbot/parameters.json
 pipenv --python 3.9
 pipenv install --skip-lock
@@ -35,8 +39,8 @@ Then navigate into the `mathbot` directory and run the bot with `python entrypoi
 ## Setup for development
 
 ```bash
-git clone https://github.com/DXsmiley/mathbot.git
-cd mathbot
+git clone https://github.com/DenverCoderOne/math-bot-with-steps.git
+cd math-bot-with-steps
 cp mathbot/parameters_default.json mathbot/parameters.json
 pipenv --python 3.9
 pipenv install --dev --skip-lock
