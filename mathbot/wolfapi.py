@@ -123,7 +123,9 @@ class Client:
 			('units', 'nonmetric' if imperial else 'metric'),
 			('scantimeout', 25)
 		]
-		podstates = WOLF_PODSTATES if not show_steps else STEP_BY_STEP_PODSTATES
+		podstates = WOLF_PODSTATES
+		if show_steps:
+			podstates += STEP_BY_STEP_PODSTATES
 		if extra_pod_information:
 			for i in podstates:
 				payload.append(('podstate', i))
