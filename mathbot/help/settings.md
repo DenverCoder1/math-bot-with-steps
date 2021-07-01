@@ -53,7 +53,7 @@ These settings can be applied to the `server` and `channel` contexts, but only b
 Disable the `=wolf` command on a server:
 `{{prefix}}set server c-wolf disable`
 
-Disable the `=wolf` command on a server:
+Disable the `=steps` command on a server:
 `{{prefix}}set server c-steps disable`
 
 Enable the `=calc` command on a single channel:
