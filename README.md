@@ -11,7 +11,7 @@ It's primary features are:
 
 ## Links
 
-- [Add MathBotWithSteps to your own server](https://discord.com/api/oauth2/authorize?client_id=859799953513775104&permissions=117824&scope=bot)
+- [Add MathBotWithSteps to your own server](https://denvercoder1.github.io/mathbot/add.html)
 
 ### MathBot Links
 
