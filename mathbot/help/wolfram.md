@@ -1,10 +1,12 @@
-:::topics wolfram wolf wolframalpha wolfram|alpha wa alpha pup
+:::topics wolfram wolf wolframalpha wolfram|alpha wa alpha pup steps
 
 # Wolfram|Alpha
 
 The `{{prefix}}wolf` command is used to query Wolfram|Alpha.
 
 The `{{prefix}}pup` command will produce fewer results.
+
+The `{{prefix}}steps` command will include step-by-step solutions.
 
 You can use the `{{prefix}}theme` command to change the colour of the results.
 You can use the `{{prefix}}units` command to set your default units (metric or imperial).

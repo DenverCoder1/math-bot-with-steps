@@ -1,28 +1,38 @@
-# MathBot
+# MathBotWithSteps
 
-MathBot is a discord bot that contains a number of features to help with mathematics.
+MathBotWithSteps is a fork of [MathBot](https://github.com/DXsmiley/mathbot) that adds an additional command, `=steps` that will query Wolfram|Alpha **with step-by-step solutions**.
+
+MathBot is a Discord bot that contains a number of features to help with mathematics.
 
 It's primary features are:
 - LaTeX rendering
 - Querying Wolfram|Alpha
 - A Turing complete calculator
 
-The bot is currently developed for python `3.6.4`.
-
 ## Links
 
-- [Add the bot to your own server](https://dxsmiley.github.io/mathbot/add.html)
-- [Support me on Patreon](https://www.patreon.com/dxsmiley)
+- [Add MathBotWithSteps to your own server](https://denvercoder1.github.io/math-bot-with-steps/add.html)
+- [DenverCoder1's Support Server](https://discord.gg/fPrdqh3Zfu)
+
+<a href="https://denvercoder1.github.io/math-bot-with-steps/add.html" alt="Add bot" title="Add MathBotWithSteps to your server">
+    <img src="https://custom-icon-badges.herokuapp.com/badge/-Add%20MathBotWithSteps-green?style=for-the-badge&logo=square-plus&logoColor=white"/></a>
+<a href="https://discord.gg/fPrdqh3Zfu" alt="Discord" title="Dev Pro Tips Discussion & Support Server">
+    <img src="https://img.shields.io/discord/819650821314052106?color=7289DA&logo=discord&logoColor=white&style=for-the-badge"/></a>
+
+### MathBot Links
+
+- [Add MathBot to your own server](https://dxsmiley.github.io/mathbot/add.html)
+- [Support DXsmiley on Patreon](https://www.patreon.com/dxsmiley)
 - [Project Trello Board](https://trello.com/b/j6b7vpGA/mathbot)
 - [Official Discord Server](https://discord.gg/JbJbRZS)
 
 ## Setup for use
 
 ```bash
-git clone https://github.com/DXsmiley/mathbot.git
-cd mathbot
+git clone https://github.com/DenverCoderOne/math-bot-with-steps.git
+cd math-bot-with-steps
 cp mathbot/parameters_default.json mathbot/parameters.json
-pipenv --python 3.6
+pipenv --python 3.9
 pipenv install --skip-lock
 ```
 
@@ -30,21 +40,21 @@ Then open parameters.json and change `tokens` to the token of the bot used for d
 
 It is *strongly* recommend that you setup an instance of Redis if you want to use the bot on even a moderate scale. The disk-based keystore is easy to setup but runs very slowly, and as such is only useful of a development tool.
 
-Then navigate into the `mathbot` directory and run the bot with `python bot.py parameters.json`.
+Then navigate into the `mathbot` directory and run the bot with `python entrypoint.py parameters.json`.
 
 ## Setup for development
 
 ```bash
-git clone https://github.com/DXsmiley/mathbot.git
-cd mathbot
+git clone https://github.com/DenverCoderOne/math-bot-with-steps.git
+cd math-bot-with-steps
 cp mathbot/parameters_default.json mathbot/parameters.json
-pipenv --python 3.6
+pipenv --python 3.9
 pipenv install --dev --skip-lock
 ```
 
 Then open parameters.json and change `tokens` to the token of the bot. Change `release` to `development`. Optionally change the other parameters.
 
-Then navigate into the `mathbot` directory and run the bot with `python bot.py parameters.json`.
+Then navigate into the `mathbot` directory and run the bot with `python entrypoint.py parameters.json`.
 
 ## Contributing guide
 
@@ -65,9 +75,9 @@ This should really only be used for development and personal use.
 
 Use the `test` script in side the `mathbot` folder to run the test suite.
 
-Some of the tests require that a bot is running and connected to Discord. To enable them, use the `--run-automata` command line argument. In addition a file with the neccicary tokens filled out needs to be provided to the `--parameter-file` argument. To get all tests running, the *token*, *automata* and *wolfram* parameters need to be filled out.
+Some of the tests require that a bot is running and connected to Discord. To enable them, use the `--run-automata` command line argument. In addition a file with the necessary tokens filled out needs to be provided to the `--parameter-file` argument. To get all tests running, the *token*, *automata* and *wolfram* parameters need to be filled out.
 
-For the sake example, I run my tests with the command `./test --run-automata --parameter-file=dev.json`. You should replace `dev.json` with a path to your own parameter file.
+For the sake of example, I run my tests with the command `./test --run-automata --parameter-file=dev.json`. You should replace `dev.json` with a path to your own parameter file.
 
 There are some additional tests that require a human to verify the bot's output. These can be enabled with `--run-automata-human`.
 
@@ -100,10 +110,8 @@ There are some additional tests that require a human to verify the bot's output.
 	- *interval* : the number of queries between mentions of the Patreon page. This is measured on a per-channel basis.
 	- *starting-amount* : Can be increased to lower the number of commands until the Patreon page is first mention.
 - *error-reporting*
-	- *channel*: ID of channel to send error reports to. If not specified, reports will not be sent.
+	- *channel*: ID of channel to send error reports to.
+	- *webhook*: Webhook to send error reports to.
 - *shards*
 	- *total*: The total number of shards that the bot is running on.
 	- *mine*: A list of integers (starting at `0`) specifying which shards should be run in this process.
-- *calculator*
-	- *persistent*: `true` or `false`. Enable to remember calculator history between runs. Off by default.
-	- *libraries*: `true` or `false`. Enables the `=libs` set of commands. Off by default.
