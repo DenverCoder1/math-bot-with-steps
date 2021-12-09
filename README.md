@@ -11,12 +11,18 @@ It's primary features are:
 
 ## Links
 
-- [Add MathBotWithSteps to your own server](https://denvercoder1.github.io/mathbot/add.html)
+- [Add MathBotWithSteps to your own server](https://denvercoder1.github.io/math-bot-with-steps/add.html)
+- [DenverCoder1's Support Server](https://discord.gg/fPrdqh3Zfu)
+
+<a href="https://denvercoder1.github.io/math-bot-with-steps/add.html" alt="Add bot" title="Add MathBotWithSteps to your server">
+    <img src="https://custom-icon-badges.herokuapp.com/badge/-Add%20MathBotWithSteps-green?style=for-the-badge&logo=square-plus&logoColor=white"/></a>
+<a href="https://discord.gg/fPrdqh3Zfu" alt="Discord" title="Dev Pro Tips Discussion & Support Server">
+    <img src="https://img.shields.io/discord/819650821314052106?color=7289DA&logo=discord&logoColor=white&style=for-the-badge"/></a>
 
 ### MathBot Links
 
 - [Add MathBot to your own server](https://dxsmiley.github.io/mathbot/add.html)
-- [Support me on Patreon](https://www.patreon.com/dxsmiley)
+- [Support DXsmiley on Patreon](https://www.patreon.com/dxsmiley)
 - [Project Trello Board](https://trello.com/b/j6b7vpGA/mathbot)
 - [Official Discord Server](https://discord.gg/JbJbRZS)
 
