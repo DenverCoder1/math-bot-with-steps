@@ -22,7 +22,6 @@ It's primary features are:
 ### MathBot Links
 
 - [Add MathBot to your own server](https://dxsmiley.github.io/mathbot/add.html)
-- [Support DXsmiley on Patreon](https://www.patreon.com/dxsmiley)
 - [Project Trello Board](https://trello.com/b/j6b7vpGA/mathbot)
 - [Official Discord Server](https://discord.gg/JbJbRZS)
 
