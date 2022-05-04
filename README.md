@@ -19,12 +19,6 @@ It's primary features are:
 <a href="https://discord.gg/fPrdqh3Zfu" alt="Discord" title="Dev Pro Tips Discussion & Support Server">
     <img src="https://img.shields.io/discord/819650821314052106?color=7289DA&logo=discord&logoColor=white&style=for-the-badge"/></a>
 
-### MathBot Links
-
-- [Add MathBot to your own server](https://dxsmiley.github.io/mathbot/add.html)
-- [Project Trello Board](https://trello.com/b/j6b7vpGA/mathbot)
-- [Official Discord Server](https://discord.gg/JbJbRZS)
-
 ## Setup for use
 
 ```bash
@@ -57,11 +51,7 @@ Then navigate into the `mathbot` directory and run the bot with `python entrypoi
 
 ## Contributing guide
 
-Relevent discussion takes place on [the MathBot Discord server](https://discord.gg/JbJbRZS).
-
-For small changes, feel free to fork the repo and make a pull request once you've made the changes. For larger things, check the [Trello board](https://trello.com/b/j6b7vpGA/mathbot) and see if anyone's already working on it. If not, shoot me a message to say that you're working on it so we don't get multiple people doing the same thing.
-
-Yes I use tabs for indentation.
+Feel free to fork the repo and make a pull request once you've made the changes.
 
 ## Setting up Wolfram|Alpha
 

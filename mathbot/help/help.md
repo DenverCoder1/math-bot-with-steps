@@ -4,7 +4,9 @@ Hello! I'm a bot that provides some maths-related features.
 
 Add MathBot to your server using this link: <{{add_link}}>
 
-MathBot is developed by DXsmiley. You can talk to her via the official MathBot server: <{{server_link}}>
+MathBotWithSteps is a fork by DenverCoder1 of MathBot, developed by DXsmiley.
+
+You can get support at DenverCoder1's official server: <{{server_link}}>
 
 The following user commands are available:
 

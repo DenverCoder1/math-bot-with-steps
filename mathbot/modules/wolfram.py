@@ -52,22 +52,22 @@ ERROR_MESSAGE_NO_RESULTS_BUT_TIMEOUTS = """Wolfram|Alpha didn't send a result ba
 but reported that it timed out while performing calculations.
 
 You can try the query on the Wolfram|Alpha website. If it works there, this is a \
-misconfiguration of the bot and you should reporting it to DXsmiley on the official \
-server: https://discord.gg/JbJbRZS
+misconfiguration of the bot and you should reporting it to DenverCoder1 on the official \
+server: https://discord.gg/fPrdqh3Zfu
 """
 
 ERROR_MESSAGE_TIMEOUT = """Wolfram|Alpha query timed out.
 Maybe you should try again?
 
-If this error keeps recurring, you should report it to DXsmiley on the \
-official MathBot server: https://discord.gg/JbJbRZS
+If this error keeps recurring, you should report it to DenverCoder1 on the \
+official MathBot server: https://discord.gg/fPrdqh3Zfu
 """
 
 ERROR_MESSAGE_ACCOUNT_BLOCKED = """MathBot has exceeded the total number of \
 Wolfram|Alpha queries it is allowed to make in one month.
 
-You should report this error to DXsmiley on the official MathBot \
-server: https://discord.gg/JbJbRZS
+You should report this error to DenverCoder1 on the official MathBot \
+server: https://discord.gg/fPrdqh3Zfu
 """
 
 FOOTER_LINK = """\
@@ -89,14 +89,14 @@ FILTER_FAILURE = '''\
 **That query contains one or more banned words and will not be run.**
 The owner of this server has the power to turn this off.
 Alternatively, you can make the query by messaging this bot directly.
-Questions and requests should be directed to <@133804143721578505> on the official MathBot server: https://discord.gg/JbJbRZS
+Questions and requests should be directed to DenverCoder1 on the official MathBot server: https://discord.gg/fPrdqh3Zfu
 '''
 
 FILTER_FAILURE_INTERPRETATION = '''\
 **The _result_ for that query contained one or more banned words and will not be shown.**
 The owner of this server has the power to turn this off.
 Alternatively, you can make the query by messaging this bot directly.
-Questions and requests should be directed to <@133804143721578505> on the official MathBot server: https://discord.gg/JbJbRZS
+Questions and requests should be directed to DenverCoder1 on the official MathBot server: https://discord.gg/fPrdqh3Zfu
 '''
 
 NO_API_ERROR = '''

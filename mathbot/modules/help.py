@@ -7,7 +7,7 @@ import discord
 from utils import is_private
 
 
-SERVER_LINK = 'https://discord.gg/JbJbRZS'
+SERVER_LINK = 'https://discord.gg/fPrdqh3Zfu'
 PREFIX_MEMORY_EXPIRE = 60 * 60 * 24 * 3 # 3 days
 
 
@@ -27,7 +27,7 @@ class HelpModule(Cog):
 
 	@command()
 	async def invite(self, context):
-		await context.send('Add mathbot to your server: https://dxsmiley.github.io/mathbot/add.html')
+		await context.send('Add mathbot to your server: https://denvercoder1.github.io/math-bot-with-steps/add.html')
 
 	@command()
 	async def help(self, context, *, topic='help'):
@@ -57,7 +57,7 @@ class HelpModule(Cog):
 					page,
 					prefix=prefix,
 					mention=context.bot.user.mention,
-					add_link='https://dxsmiley.github.io/mathbot/add.html',
+					add_link='https://denvercoder1.github.io/math-bot-with-steps/add.html',
 					server_link=SERVER_LINK,
 					patreon_listing=await context.bot.get_patron_listing()
 				)
