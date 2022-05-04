@@ -10,7 +10,7 @@ cd ~
 LAST_SHARD=$(( $(jq -rM '.shards.total' config.json) - 1 ))
 
 if [ ! -d "mathbot" ]; then
-    git clone "https://github.com/DXsmiley/mathbot.git"
+    git clone "https://github.com/DenverCoder1/math-bot-with-steps.git"
 fi
 
 cd mathbot

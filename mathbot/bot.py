@@ -41,7 +41,7 @@ The bot does not have all the permissions it requires in order to run in this ch
  - Read message history
 
 Contact your server administrators to rectify this problem.
-You can seek additional support on the official mathbot server: https://discord.gg/JbJbRZS
+You can seek additional support on the official Discord server: https://discord.gg/fPrdqh3Zfu
 '''
 
 
@@ -255,7 +255,7 @@ class MathBot(AdvertisingMixin, PatronageMixin, discord.ext.commands.AutoSharded
 				embed = discord.Embed(
 					title='An internal error occurred.',
 					colour=discord.Colour.red(),
-					description='If this keeps happening, you should contact the developers on the official mathbot server: https://discord.gg/JbJbRZS'
+					description='If this keeps happening, you should contact the developers on the official Discord server: https://discord.gg/fPrdqh3Zfu'
 				)
 				await destination.send(embed=embed)
 		finally:

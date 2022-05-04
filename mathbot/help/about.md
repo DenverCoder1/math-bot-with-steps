@@ -1,12 +1,14 @@
 :::topics about info
 
-Add MathBot to your server using this link: <{{add_link}}>
+Add MathBotWithSteps to your server using this link: <{{add_link}}>
 
-MathBot is developed by DXsmiley. You can talk to her via the official MathBot server: <{{server_link}}>
+MathBotWithSteps is a fork by DenverCoder1 of MathBot, developed by DXsmiley.
 
-Source code: https://github.com/DXsmiley/mathbot
+You can get support at DenverCoder1's official server: <{{server_link}}>
 
-MathBot is written in Python using discord.py (<https://github.com/Rapptz/discord.py>).
+Source code: https://github.com/DenverCoder1/math-bot-with-steps
+
+MathBotWithSteps is written in Python using discord.py (<https://github.com/Rapptz/discord.py>).
 
 Thankyou to the following patrons for supporting the bot:
 {{patreon_listing}}

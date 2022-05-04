@@ -176,7 +176,7 @@ class CalculatorModule(Cog):
 		if len(libs) >= 10:
 			return discord.Embed(
 				title='Library add error',
-				description='Servers cannot have more than ten libraries installed at once. If you want to complain about this poke @DXsmiley over here: https://discord.gg/JbJbRZS',
+				description='Servers cannot have more than ten libraries installed at once.',
 				colour=discord.Colour.red()
 			)
 		# Add the new library to the list and store it again
