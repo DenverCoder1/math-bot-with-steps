@@ -37,9 +37,9 @@ import core.parameters
 import core.blame
 from imageutil import *
 
-from discord.ext.commands import command, check, Cog
+from discord.ext import commands
 from core.util import respond
-from utils import is_private, image_to_discord_file
+from utils import is_private, image_to_discord_file, run_typing
 
 
 core.help.load_from_file('./help/wolfram.md')
@@ -208,38 +208,54 @@ class AQcontextImitator:
 		return self.channel.guild
 
 
-class WolframModule(Cog):
+class WolframModule(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
 
-	@command()
+	@commands.hybrid_command()
 	@core.settings.command_allowed('c-wolf')
-	@check(require_api)
-	async def wolf(self, ctx, *, query=''):
+	@commands.check(require_api)
+	async def wolf(self, ctx: commands.Context[commands.Bot], *, query: str = ""):
+		'''Search Wolfram|Alpha for a query.
+		
+		Arguments:
+			query: The query to search for.
+		'''
 		await self.command_impl(ctx, query, False, False, 'wolf')
 
-	@command()
+	@commands.hybrid_command()
 	@core.settings.command_allowed('c-steps')
-	@check(require_api)
+	@commands.check(require_api)
 	async def steps(self, ctx, *, query=''):
+		'''Search Wolfram|Alpha for a query with Step-by-Step solutions included.
+
+		Arguments:
+			query: The query to search for.
+		'''
 		await self.command_impl(ctx, query, False, True, 'steps')
 
-	@command()
+	@commands.hybrid_command()
 	@core.settings.command_allowed('c-wolf')
-	@check(require_api)
+	@commands.check(require_api)
 	async def pup(self, ctx, *, query=''):
+		'''Display a short answer from a Wolfram|Alpha query.
+
+		Arguments:
+			query: The query to search for.
+		'''
 		await self.command_impl(ctx, query, True, False, 'pup')
 
 	async def command_impl(self, ctx, query, small, show_steps, name):
 		if query in ['', 'help']:
 			await ctx.send(f'Usage: `{ctx.prefix}{name} plot x^2 - 3`. Run `{ctx.prefix}help {name}` for details.')
 		else:
+			await ctx.defer()
 			async with Locker(ctx) as ok:
 				if ok:
 					await self.answer_query(ctx, query, small=small, show_steps=show_steps)
 
-	@Cog.listener()
+	@commands.Cog.listener()
 	async def on_reaction_add(self, reaction, user):
 		if not user.bot: # Might need to change this when autmated testing is reinstated
 			if reaction.emoji == RERUN_EMOJI and await self.bot.settings.resolve_message('c-wolf', reaction.message):
@@ -307,9 +323,9 @@ class WolframModule(Cog):
 
 		# Perform the query
 		try:
-			async with ctx.typing():
+			async def answer_query_inner():
 				units = await ctx.bot.keystore.get(f'p-wolf-units:{author.id}')
-				result = await api.request(
+				return await api.request(
 					query,
 					assumptions,
 					imperial=(units == 'imperial'),
@@ -317,6 +333,7 @@ class WolframModule(Cog):
 					extra_pod_information=not small,
 					show_steps=show_steps
 				)
+			result = await run_typing(ctx, answer_query_inner())
 		except (wolfapi.WolframError, wolfapi.WolframDidntSucceed):
 			await ctx.send(ERROR_MESSAGE_NO_RESULTS)
 		except asyncio.TimeoutError:
@@ -547,5 +564,5 @@ def cleanup_section_list(items):
 			yield i
 
 
-def setup(bot):
-	bot.add_cog(WolframModule(bot))
+async def setup(bot: commands.Bot):
+	await bot.add_cog(WolframModule(bot))

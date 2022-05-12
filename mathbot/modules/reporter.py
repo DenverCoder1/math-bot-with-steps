@@ -2,7 +2,7 @@ import collections
 import asyncio
 import traceback
 import discord
-from discord.ext.commands import Cog
+from discord.ext import commands
 import termcolor
 import aiohttp
 
@@ -22,13 +22,13 @@ QUEUE = typing.Deque[str]()
 QUEUE = collections.deque()
 
 
-class ReporterModule(Cog):
+class ReporterModule(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
 		self.task = None
 
-	@Cog.listener()
+	@commands.Cog.listener()
 	async def on_ready(self):
 		if self.task is not None:
 			self.task.end()
@@ -117,5 +117,5 @@ async def report_via_webhook_only(bot, string: str):
 					termcolor.cprint(await resp.text(), 'red')
 
 
-def setup(bot):
-	bot.add_cog(ReporterModule(bot))
+async def setup(bot: commands.Bot):
+	await bot.add_cog(ReporterModule(bot))

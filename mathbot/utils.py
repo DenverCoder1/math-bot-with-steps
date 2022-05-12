@@ -1,9 +1,10 @@
 import sys
 import functools
+from typing import Any, Coroutine
 import discord
 import io
 import core.blame
-
+from discord.ext import commands
 
 class MessageEditedException(Exception):
 	pass
@@ -14,11 +15,11 @@ class MessageEditGuard:
 		may be edited in order to re-invoke them.
 	'''
 
-	def __init__(self, message, destination, bot):
-		self._message = message
-		self._destination = destination
-		self._bot = bot
-		self._initial_content = self._message.clean_content
+	def __init__(self, ctx):
+		self._ctx = ctx
+		self._message = ctx.message
+		self._bot = ctx.bot
+		self._initial_content = ctx.message.clean_content
 
 	def __enter__(self):
 		return self
@@ -30,7 +31,7 @@ class MessageEditGuard:
 		if self._initial_content != self._message.clean_content:
 			print('Edit guard prevented sending of message')
 			raise MessageEditedException
-		return await self._bot.send_patch(self._message, self._destination.send)(*args, **kwargs)
+		return await self._bot.send_patch(self._message, self._ctx.send)(*args, **kwargs)
 
 
 def listify(function):
@@ -57,7 +58,18 @@ def err(*args, **kwargs):
 
 
 def is_private(channel):
-	return isinstance(channel, discord.abc.PrivateChannel)
+	return channel.type == discord.ChannelType.private
+
+
+async def run_typing(ctx: commands.Context[commands.Bot], coro: Coroutine[Any, Any, Any]):
+	if not ctx.interaction:
+		async with ctx.typing():
+			return await coro
+	try:
+		await ctx.defer()
+	except Exception:
+		pass
+	return await coro
 
 
 def image_to_discord_file(image, fname):

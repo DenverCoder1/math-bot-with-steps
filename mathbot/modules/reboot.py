@@ -1,10 +1,12 @@
-from discord.ext.commands import command, Cog
+from discord.ext import commands
 import subprocess
 import modules.reporter
 
-class Reboot(Cog):
 
-	@command()
+
+class Reboot(commands.Cog):
+
+	@commands.command()
 	async def reboot(self, ctx):
 		if ctx.author.id in ctx.bot.parameters.getd('reboot.allowed', []):
 			app = ctx.bot.parameters.get('reboot.app')
@@ -21,5 +23,5 @@ class Reboot(Cog):
 				'-H', f'Authorization: Bearer {api_key}'
 			])
 
-def setup(bot):
-	bot.add_cog(Reboot())
+async def setup(bot: commands.Bot):
+	await bot.add_cog(Reboot())

@@ -21,9 +21,9 @@ import traceback
 import typing
 import discord
 import abc
-import functools
 
-from discord.ext.commands import command, guild_only, has_permissions, Cog
+from discord.ext import commands
+
 
 core.help.load_from_file('./help/calculator_brief.md')
 core.help.load_from_file('./help/calculator_full.md')
@@ -89,7 +89,7 @@ HISTORY_ENABLED_SERVERS = \
 	]
 
 
-class CalculatorModule(Cog):
+class CalculatorModule(commands.Cog):
 
 	__slots__ = ['bot', 'command_history', 'replay_state']
 
@@ -98,13 +98,17 @@ class CalculatorModule(Cog):
 		self.command_history = collections.defaultdict(lambda : '')
 		self.replay_state = collections.defaultdict(ReplayState)
 
-	@command()
+	@commands.hybrid_command()
 	@core.settings.command_allowed('c-calc')
-	async def calc(self, ctx, *, arg):
-		''' Handle the standard =calc command '''
-		await self.perform_calculation(arg.strip(), ctx.message, ctx.send)
+	async def calc(self, ctx, *, expression):
+		'''Calculate a mathematical expression.
 
-	@command(name='calc-history', enabled=ENABLE_HISTORY)
+		Arguments:
+			expression: The expression to calculate.
+		'''
+		await self.perform_calculation(expression.strip(), ctx.message, ctx.send)
+
+	@commands.command(name='calc-history', enabled=ENABLE_HISTORY)
 	async def handle_view_history(self, ctx):
 		''' Command to view the list of recently run expressions. '''
 		if not await self.allow_calc_history(ctx.channel):
@@ -118,8 +122,8 @@ class CalculatorModule(Cog):
 				for i in history_grouping(commands_text):
 					await ctx.send(i)
 
-	@command(name='libs-list', enabled=ENABLE_LIBS)
-	@guild_only()
+	@commands.command(name='libs-list', enabled=ENABLE_LIBS)
+	@commands.guild_only()
 	@core.settings.command_allowed('c-calc')
 	@core.util.respond
 	async def handle_libs_list(self, ctx):
@@ -132,9 +136,9 @@ class CalculatorModule(Cog):
 			embed.add_field(name=i['name'], value=i['url'])
 		return embed
 
-	@command(name='libs-add', enabled=ENABLE_LIBS)
-	@guild_only()
-	@has_permissions(administrator=True)
+	@commands.command(name='libs-add', enabled=ENABLE_LIBS)
+	@commands.guild_only()
+	@commands.has_permissions(administrator=True)
 	@core.util.respond
 	async def handle_libs_add(self, ctx, *, url):
 		print('Adding a library')
@@ -192,9 +196,9 @@ class CalculatorModule(Cog):
 			footer='Run `=calc-reload` to load the library.'
 		)
 
-	@command(name='libs-remove', enabled=ENABLE_LIBS)
-	@guild_only()
-	@has_permissions(administrator=True)
+	@commands.command(name='libs-remove', enabled=ENABLE_LIBS)
+	@commands.guild_only()
+	@commands.has_permissions(administrator=True)
 	@core.util.respond
 	async def handle_libs_remove(self, message, url):
 		''' Command to remove a library from the list '''
@@ -212,7 +216,7 @@ class CalculatorModule(Cog):
 			colour=discord.Colour.blue()
 		)
 
-	@command(name='calc-reload')
+	@commands.command(name='calc-reload')
 	@core.settings.command_allowed('c-calc')
 	async def handle_calc_reload(self, ctx):
 		channel = ctx.channel.id
@@ -223,7 +227,7 @@ class CalculatorModule(Cog):
 				del self.replay_state[channel]
 		await ctx.send('Calculator state has been flushed from this channel.')
 
-	@Cog.listener()
+	@commands.Cog.listener()
 	async def on_message_discarded(self, message):
 		''' Trigger the calculator when the message is prefixed by "==" '''
 		async def send(*args, **kwargs):
@@ -547,5 +551,5 @@ async def download_text(session: aiohttp.ClientSession, url: str) -> str:
 		return data
 
 
-def setup(bot):
-	bot.add_cog(CalculatorModule(bot))
+async def setup(bot: commands.Bot):
+	await bot.add_cog(CalculatorModule(bot))

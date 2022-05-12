@@ -1,7 +1,7 @@
-import core.keystore
-import warnings
 import discord
 import discord.ext.commands
+from utils import is_private
+
 
 class None2:
 	pass
@@ -58,14 +58,12 @@ class Settings:
 			return default
 		return SETTINGS[setting]['default']
 
-	async def resolve_message(self, setting, message):
+	async def resolve_message(self, setting, message: discord.Message):
 		setting = redirect(setting)
-		if isinstance(message.channel, discord.DMChannel):
+		if is_private(message.channel):
 			so = SETTINGS[setting]
 			return so.get('private', so['default'])
-		if isinstance(message.channel, discord.TextChannel):
-			return await self.resolve(setting, message.channel, message.channel.guild)
-		raise ValueError(f'{message} cannot be resolved for settings')
+		return await self.resolve(setting, message.channel, message.channel.guild)
 
 	async def set(self, setting, context, value):
 		setting = redirect(setting)
@@ -117,88 +115,34 @@ def _get_key(setting, context):
 
 async def get_single(setting, context):
 	raise Exception('setting is deprecated and cannot be used')
-	setting = redirect(setting)
-	return await core.keystore.get(_get_key(setting, context))
 
 
 async def resolve(setting, *contexts, default = None2):
 	raise Exception('setting is deprecated and cannot be used')
-	if not isinstance(setting, str):
-		raise TypeError('First argument of core.settings.resolve(setting, *contexts) should be a string.')
-	setting = redirect(setting)
-	for i in contexts:
-		result = await get_single(setting, i)
-		if result is not None:
-			return result
-	if default is not None2:
-		return default
-	return SETTINGS[setting]['default']
 
 
 async def resolve_message(setting, message):
 	raise Exception('resolve_message is deprecated and cannot be used')
-	setting = redirect(setting)
-	if message.channel.is_private:
-		so = SETTINGS[setting]
-		if 'private' in so:
-			return so['private']
-		return so['default']
-	return await resolve(setting, message.channel, message.server)
 
 
 async def get_setting(message, setting):
 	raise Exception('message is deprecated and cannot be used')
-	warnings.warn('core.settings.get_setting is deprecated', stacklevel = 2)
-	return await resolve_message(setting, message)
 
 
 async def set(setting, context, value):
 	raise Exception('set is deprecated and cannot be used')
-	setting = redirect(setting)
-	key = _get_key(setting, context)
-	print(key, '--->', value)
-	if value is None:
-		await core.keystore.delete(key)
-	elif value not in [0, 1]:
-		raise ValueError('{} is not a valid setting value'.format(value))
-	else:
-		await core.keystore.set(key, value)
 
 
 async def get_server_prefix(context):
 	raise Exception('get_server_prefix is deprecated and cannot be used')
-	if isinstance(context, discord.message.Message):
-		context = context.channel
-	if isinstance(context, discord.abc.PrivateChannel):
-		return '='
-	if isinstance(context, discord.channel.TextChannel):
-		if context.is_private:
-			return '='
-		context = context.server
-	if not isinstance(context, discord.Server):
-		raise TypeError('{} is not a valid server'.format(context))
-	stored = await core.keystore.get('s-prefix:' + context.id)
-	return '=' if stored is None else str(stored)
 
 
 async def set_server_prefix(context, prefix):
 	raise Exception('set_server_prefix is deprecated and cannot be used')
-	if isinstance(context, discord.Message):
-		context = context.channel
-	if isinstance(context, discord.TextChannel):
-		if context.is_private:
-			return '='
-		context = context.server
-	if not isinstance(context, discord.Server):
-		raise TypeError('{} is not a valid server'.format(context))
-	return (await core.keystore.set('s-prefix:' + context.id, prefix)) or '='
 
 
 async def get_channel_prefix(channel):
 	raise Exception('get_channel_prefix is deprecated and cannot be used')
-	if channel.is_private:
-		return '='
-	return await get_server_prefix(channel.server)
 
 
 def redirect(setting):

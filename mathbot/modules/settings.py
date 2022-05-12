@@ -1,11 +1,9 @@
-import aioredis
-import os
-import re
 import core.keystore
 import core.help
 import core.settings
 
-from discord.ext.commands import command, guild_only, has_permissions, Cog
+from discord.ext import commands
+
 
 
 core.help.load_from_file('./help/settings.md')
@@ -47,7 +45,7 @@ class WasProblems(Exception):
 	pass
 
 
-class SettingsModule(Cog):
+class SettingsModule(commands.Cog):
 
 	reduce_value = {
 		'enable': 1,
@@ -66,9 +64,9 @@ class SettingsModule(Cog):
 		False: 'disabled'
 	}.get
 
-	@command(name='set')
-	@guild_only()
-	@has_permissions(administrator=True)
+	@commands.command(name='set')
+	@commands.guild_only()
+	@commands.has_permissions(administrator=True)
 	async def _set(self, ctx, context: str, setting: str, value: str):
 		try:
 			async with ProblemReporter(ctx) as problem:
@@ -87,7 +85,7 @@ class SettingsModule(Cog):
 			await ctx.bot.settings.set(setting, context, val)
 			await ctx.send('Setting applied.')
 
-	@command()
+	@commands.command()
 	async def theme(self, ctx, theme):
 		theme = theme.lower()
 		if theme not in ['light', 'dark']:
@@ -95,7 +93,7 @@ class SettingsModule(Cog):
 		await ctx.bot.keystore.set(f'p-tex-colour:{ctx.message.author.id}', theme)
 		await ctx.send(f'Your theme has been set to `{theme}`.')
 
-	@command()
+	@commands.command()
 	async def units(self, ctx, units: str):
 		units = units.lower()
 		if units not in ['metric', 'imperial']:
@@ -104,8 +102,8 @@ class SettingsModule(Cog):
 			await ctx.bot.keystore.set(f'p-wolf-units:{ctx.author.id}', units)
 			await ctx.send(f'Your units have been set to `{units}`.')
 
-	@command()
-	@guild_only()
+	@commands.command()
+	@commands.guild_only()
 	async def checksetting(self, ctx, setting):
 		if core.settings.details(setting) is None:
 			return '`{}` is not a valid setting. See `=help settings` for a list of valid settings.'
@@ -122,8 +120,8 @@ class SettingsModule(Cog):
 			SettingsModule.expand_value(default)
 		))
 
-	@command()
-	@guild_only()
+	@commands.command()
+	@commands.guild_only()
 	async def checkallsettings(self, ctx):
 		lines = [
 			' Setting          | Channel  | Server   | Default',
@@ -145,7 +143,7 @@ class SettingsModule(Cog):
 			))
 		await ctx.send('```\n{}\n```'.format('\n'.join(lines)))
 
-	@command()
+	@commands.command()
 	async def checkdmsettings(self, ctx):
 		lines = [
 			' Setting          | Default  | Resolved ',
@@ -165,8 +163,8 @@ class SettingsModule(Cog):
 			))
 		await ctx.send('```\n{}\n```'.format('\n'.join(lines)))
 
-	@command()
-	@guild_only()
+	@commands.command()
+	@commands.guild_only()
 	async def prefix(self, ctx, *, arg=''):
 		prefix = await ctx.bot.settings.get_server_prefix(ctx.message.guild)
 		p_text = prefix or '='
@@ -178,13 +176,13 @@ class SettingsModule(Cog):
 			m += '\nServer admins can use the `setprefix` command to change the prefix.'
 		await ctx.send(m)
 
-	@command()
-	@guild_only()
-	@has_permissions(administrator=True)
+	@commands.command()
+	@commands.guild_only()
+	@commands.has_permissions(administrator=True)
 	async def setprefix(self, ctx, *, new_prefix):
 		prefix = new_prefix.strip().replace('`', '')
 		await ctx.bot.settings.set_server_prefix(ctx.guild, prefix)
 		await ctx.send(f'Bot prefix for this server has been changed to `{prefix}`.')
 
-def setup(bot):
-	bot.add_cog(SettingsModule())
+async def setup(bot: commands.Bot):
+	await bot.add_cog(SettingsModule())

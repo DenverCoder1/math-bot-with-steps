@@ -1,10 +1,12 @@
-from discord.ext.commands import command, Cog
+from discord.ext import commands
 
-class ThrowsModule(Cog):
 
-	@command()
+
+class ThrowsModule(commands.Cog):
+
+	@commands.command()
 	async def throw(self, context):
 		raise Exception('I wonder what went wrong?')
 
-def setup(bot):
-	bot.add_cog(ThrowsModule())
+async def setup(bot: commands.Bot):
+	await bot.add_cog(ThrowsModule())

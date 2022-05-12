@@ -1,7 +1,7 @@
 # Provides stats on the bot to bot listing services
 
 import aiohttp
-from discord.ext.commands import Cog
+from discord.ext import commands
 
 BOTS_ORG_URL = 'https://discordbots.org/api/bots/{bot_id}/stats'
 BOTS_GG_URL = 'https://discord.bots.gg/api/v1/bots/{bot_id}/stats'
@@ -11,7 +11,7 @@ HITLIST = [
 	(BOTS_GG_URL, 'bots-gg', 'guildCount', 'shardCount', 'shardId')
 ]
 
-class AnalyticsModule(Cog):
+class AnalyticsModule(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
@@ -41,7 +41,7 @@ class AnalyticsModule(Cog):
 					server.name
 				))
 
-	@Cog.listener()
+	@commands.Cog.listener()
 	async def on_ready(self):
 		# gets triggered on every reconnect, but we only want to
 		# report things when the bot as a whole restarts,
@@ -75,5 +75,5 @@ class AnalyticsModule(Cog):
 					num_servers = 1
 
 
-def setup(bot):
-	bot.add_cog(AnalyticsModule(bot))
+async def setup(bot: commands.Bot):
+	await bot.add_cog(AnalyticsModule(bot))

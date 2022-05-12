@@ -3,11 +3,10 @@
 
 import re
 import random
-
 import core.help
 import core.settings
 import core.util
-from discord.ext.commands import command, Cog
+from discord.ext import commands
 import math
 
 core.help.load_from_file('./help/roll.md')
@@ -21,18 +20,22 @@ class DiceException(Exception): pass
 class ValuesTooBigException(DiceException): pass
 
 
-class DiceModule(Cog):
+class DiceModule(commands.Cog):
 
 	''' Module to allow the user to roll dice '''
 
-	@command()
+	@commands.hybrid_command()
 	@core.settings.command_allowed('c-roll')
 	@core.util.respond
-	async def roll(self, ctx, arg):
-		''' Roll command. Argument should be of the format `2d6` or similar. '''
-		return await self.handle_roll(ctx, arg, should_sort=True)
+	async def roll(self, ctx, dice):
+		'''Simulate a roll of dice.
 
-	@command()
+		Arguments:
+			dice: The dice to roll, for example, `2d6` or `1d20`.
+		'''
+		return await self.handle_roll(ctx, dice, should_sort=True)
+
+	@commands.command()
 	@core.settings.command_allowed('c-roll')
 	@core.util.respond
 	async def rollu(self, ctx, arg):
@@ -127,5 +130,5 @@ class DiceModule(Cog):
 		std = math.sqrt((dice * (faces * faces - 1)) / 12)
 		return int(random.gauss(mean, std))
 
-def setup(bot):
-	bot.add_cog(DiceModule())
+async def setup(bot: commands.Bot):
+	await bot.add_cog(DiceModule())
