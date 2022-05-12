@@ -4,15 +4,17 @@ import time
 import asyncio
 import discord
 import traceback
-from discord.ext.commands import command, Cog
+from discord.ext import commands
 
-class Heartbeat(Cog):
+
+
+class Heartbeat(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
 		self.background_task = None
 
-	@Cog.listener()
+	@commands.Cog.listener()
 	async def on_ready(self):
 		if self.background_task is None:
 			self.background_task = self.bot.loop.create_task(self.pulse())
@@ -45,7 +47,7 @@ class Heartbeat(Cog):
 		for i in self.bot.shard_ids:
 			await self.bot.keystore.set('heartbeat', str(i), 1)
 
-	@command()
+	@commands.command()
 	async def heartbeat(self, context):
 		error_queue_length = await self.bot.keystore.llen('error-report')
 		current_time = int(time.time())
@@ -62,5 +64,5 @@ class Heartbeat(Cog):
 		lines += ['', f'Error queue length: {error_queue_length}', '```']
 		await context.send('\n'.join(lines))
 
-def setup(bot):
-	bot.add_cog(Heartbeat(bot))
+async def setup(bot: commands.Bot):
+	await bot.add_cog(Heartbeat(bot))

@@ -1,10 +1,6 @@
 import logging
-from discord.ext.commands import Context
-from discord.abc import Messageable
-
 
 LOG = logging.getLogger(__name__)
-
 
 async def set_blame(keystore, sent, blame):
 	''' Assigns blame to a particular message.

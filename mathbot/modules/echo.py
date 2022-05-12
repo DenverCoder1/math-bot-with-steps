@@ -1,18 +1,20 @@
 # Has a command which echoes whatever text was given to it.
 # Used only for testing purposes.
 
-from discord.ext.commands import command, Cog
+from discord.ext import commands
 
 
-class EchoModule(Cog):
+
+
+class EchoModule(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
 
-	@command()
+	@commands.command()
 	async def echo(self, context, *, text: str):
 		await context.send(text)
 
 
-def setup(bot):
-	bot.add_cog(EchoModule(bot))
+async def setup(bot: commands.Bot):
+	await bot.add_cog(EchoModule(bot))
