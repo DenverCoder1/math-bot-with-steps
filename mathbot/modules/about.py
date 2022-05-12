@@ -6,10 +6,7 @@ import asyncio
 import aiohttp
 import datetime
 import core.help
-from discord.ext.commands import command, Cog
-import codecs
-from modules.reporter import report
-from core.settings import command_allowed
+from discord.ext import commands
 
 
 
@@ -37,12 +34,16 @@ async def get_bot_total_servers(id):
 			return jdata.get('server_count')
 
 
-class AboutModule(Cog):
+class AboutModule(commands.Cog):
+
+	def __init__(self, bot: commands.Bot):
+		self.bot = bot
+		print('About module loaded')
 
 	# Send a message detailing the shard number, server count,
 	# uptime and and memory using of this shard
-	@command()
-	async def stats(self, context):
+	@commands.command()
+	async def stats(self, ctx: commands.Context[commands.Bot]):
 		embed = discord.Embed(title='MathBot Stats', colour=BOT_COLOUR)
 		embed.add_field(
 			name='Total Servers',
@@ -52,12 +53,12 @@ class AboutModule(Cog):
 		)
 		embed.add_field(
 			name='Visible Servers',
-			value=len(context.bot.guilds),
+			value=len(ctx.bot.guilds),
 			inline=True
 		)
 		embed.add_field(
 			name='Shard IDs',
-			value=', '.join([str(i + 1) for i in context.bot.shard_ids]),
+			value=', '.join([str(i + 1) for i in ctx.bot.shard_ids]),
 			inline=True
 		)
 		embed.add_field(
@@ -71,24 +72,24 @@ class AboutModule(Cog):
 			inline=True
 		)
 		embed.set_footer(text='Time is in hh:mm')
-		await context.send(embed=embed)
+		await ctx.send(embed=embed)
 
-	@command()
-	async def ping(self, context):
-		await context.send(f'Pong! Latency {context.bot.latency}.')
+	@commands.command()
+	async def ping(self, ctx: commands.Context[commands.Bot]):
+		await ctx.send(f'Pong! Latency {ctx.bot.latency}.')
 
 	# Aliases for the help command
-	@command()
-	async def about(self, context):
-		cmd = context.bot.get_command('help')
-		await context.invoke(cmd, topic='about')
+	@commands.command()
+	async def about(self, ctx: commands.Context[commands.Bot]):
+		cmd = ctx.bot.get_command('help')
+		await ctx.invoke(cmd, topic='about')
 
-	@command(name=codecs.encode('shefhvg', 'rot_13'))
-	@command_allowed('x-bonus')
-	async def ignore_pls(self, context):
-		with open('not_an_image', 'rb') as f:
-			await context.send(file=discord.File(f, 'youaskedforit.png'))
-		await report(context.bot, ':fox:')
+	@commands.command()
+	@commands.is_owner()
+	async def sync(self, ctx: commands.Context[commands.Bot]):
+		msg = await ctx.send('Syncing commands...')
+		await ctx.bot.tree.sync()
+		await msg.edit(content='Synced commands!')
 
 
 def get_uptime():
@@ -107,5 +108,5 @@ def get_memory_usage():
 	return mem // (1024 * 1024)
 
 
-def setup(bot):
-	bot.add_cog(AboutModule())
+async def setup(bot: commands.Bot):
+	await bot.add_cog(AboutModule(bot))

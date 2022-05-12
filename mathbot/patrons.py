@@ -1,5 +1,7 @@
-from discord.ext.commands import command, Cog
+from discord.ext import commands
 import discord
+
+
 
 TIER_NONE = 0
 TIER_CONSTANT = 1
@@ -23,12 +25,12 @@ class PatronageMixin:
 		return (await self.keystore.get('patron', 'listing')) or 'nobody?'
 
 
-class PatronModule(Cog):
+class PatronModule(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
 
-	@command()
+	@commands.command()
 	async def check_patronage(self, ctx):
 		m = []
 		tier = await ctx.bot.patron_tier(ctx.author.id)
@@ -38,7 +40,7 @@ class PatronModule(Cog):
 			m.append(f'The patrongage of this server\'s owner is {get_tier_name(tier)}')
 		await ctx.send('\n'.join(m))
 
-	@Cog.listener()
+	@commands.Cog.listener()
 	async def on_ready(self):
 		guild = self.bot.get_guild(233826358369845251)
 		listing = []
@@ -80,5 +82,5 @@ def role_id_to_tier(name):
 	}.get(name, TIER_NONE)
 
 
-def setup(bot):
-	return bot.add_cog(PatronModule(bot))
+async def setup(bot: commands.Bot):
+	return await bot.add_cog(PatronModule(bot))

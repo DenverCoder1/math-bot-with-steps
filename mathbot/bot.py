@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-import os
 import sys
-import warnings
-import logging
 import asyncio
-import re
-import json
-import typing
 import traceback
 import objgraph
 import gc
@@ -16,7 +10,7 @@ import time
 
 import termcolor
 import discord
-import discord.ext.commands
+from discord.ext import commands
 from discord.ext.commands.errors import *
 
 import core.blame
@@ -45,7 +39,7 @@ You can seek additional support on the official Discord server: https://discord.
 '''
 
 
-class MathBot(AdvertisingMixin, PatronageMixin, discord.ext.commands.AutoShardedBot):
+class MathBot(AdvertisingMixin, PatronageMixin, commands.AutoShardedBot):
 
 	def __init__(self, parameters):
 		shard_count = parameters.get('shards total')
@@ -57,7 +51,8 @@ class MathBot(AdvertisingMixin, PatronageMixin, discord.ext.commands.AutoSharded
 			shard_count=shard_count,
 			shard_ids=shard_ids,
 			max_messages=2000,
-			fetch_offline_members=False
+			fetch_offline_members=False,
+			intents=discord.Intents.all(),
 		)
 		self.parameters = parameters
 		self.release = parameters.get('release')
@@ -69,7 +64,7 @@ class MathBot(AdvertisingMixin, PatronageMixin, discord.ext.commands.AutoSharded
 		assert self.release in ['development', 'beta', 'release']
 		self.remove_command('help')
 		for i in _get_extensions(parameters):
-			self.load_extension(i)
+			asyncio.run(self.load_extension(i))
 
 	def run(self):
 		super().run(self.parameters.get('token'))
@@ -247,7 +242,7 @@ class MathBot(AdvertisingMixin, PatronageMixin, discord.ext.commands.AutoSharded
 			await self.report_error(destination, error, human_details)
 
 	async def report_error(self, destination, error, human_details):
-		tb = ''.join(traceback.format_exception(etype=type(error), value=error, tb=error.__traceback__))
+		tb = ''.join(traceback.format_exception(type(error), value=error, tb=error.__traceback__))
 		termcolor.cprint(human_details, 'red')
 		termcolor.cprint(tb, 'blue')
 		try:
@@ -321,7 +316,7 @@ async def _determine_prefix(bot, message):
 		else:
 			custom = str(await bot.settings.get_server_prefix(message))
 			prefixes = [custom + ' ', custom]
-		return discord.ext.commands.when_mentioned_or(*prefixes)(bot, message)
+		return commands.when_mentioned_or(*prefixes)(bot, message)
 	except Exception:
 		# Avoid a flood of error messages.
 		if not bot.closing_due_to_indeterminite_prefix:

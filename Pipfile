@@ -13,7 +13,7 @@ xmltodict = ">=0.12.0"
 Pillow = ">=7.2.0 "
 termcolor = ">=1.1.0"
 objgraph = ">=3.4.1"
-"discord.py" = "==1.3.4"
+"discord.py" = {editable = true, git = "https://github.com/Rapptz/discord.py@f780b0a28334c9c0a06a1976f229853506a578e0"}
 
 [dev-packages]
 pytest = ">=3.9.1"

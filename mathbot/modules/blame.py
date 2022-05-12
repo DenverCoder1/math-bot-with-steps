@@ -6,14 +6,15 @@
 
 import core.help
 from core.util import respond
-from discord.ext.commands import command, Cog
+from discord.ext import commands
 from discord import Embed, Colour
 import json
 
 
-class BlameModule(Cog):
 
-	@command()
+class BlameModule(commands.Cog):
+
+	@commands.command()
 	@respond
 	async def blame(self, context, message_id: str):
 		if message_id == 'recent':
@@ -40,6 +41,6 @@ def error_response(text):
 	return Embed(description=text, colour=Colour.red())
 
 
-def setup(bot):
+async def setup(bot: commands.Bot):
 	core.help.load_from_file('./help/blame.md')
-	bot.add_cog(BlameModule())
+	await bot.add_cog(BlameModule())
